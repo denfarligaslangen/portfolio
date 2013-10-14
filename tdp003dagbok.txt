@@ -1,0 +1,50 @@
+skriv dagbok dåh! >.<
+
+12:e och 13:e/9
+De här dagarna började vi med att koda den första funktionen i datalagret. Den kallas load() och ska hämta datan i en json-fil vid namn "data.json". Det hela kändes som en enkel uppgift men det visade sig att vi hade fel. Av någon anledning kunde inte python tyda innehållet i filen och klagade på att den var kodad i formatet "us-ascii". Detta var mycket förvirrande och vi testade alla möjliga lösningar för att koda av filen till UTF-8, dock utan framgång. Vi började befara att uppgiften låg långt över vår förmåga.
+
+16/9
+Idag löste vi problemet med teckenkodningen! En assistent uptäckte att vårt ubuntu inte hade teckenkodningen UTF-8, vilket då ställde till det vid läsningen av json.filen. Efer att vi ändrat kodningen i ubuntu löstes våra problem av sig själva. Vi hade nämligen tänkt helt rätt från början och behövde bara ta bort all kod som kodade om filen på olika sätt, och då funkaderade det!
+
+Efter att ha hittat språkinställningsproblemet lyckades vi få get_project_count (räknar hur många projekt vi har i databasen och retunerar siffran), get_project (som hämtar alla data om ett specifikt projekt) och get_techniques (som listar alla olika tekniker i alla olika projekt i en enda lista) att fungera. Nästan i alla fall, python3 visar inte att strängar är unicode (u'...'), så load gick inte igenom testfilen. Det visade sig att testfilen var skriven för python 2.7 så genom att köra testfilen med python 2.7-tolken gick vår funktion igenom testet felfritt.
+
+18/9
+Idag programmerade vi en funktion som hette get_technique_stats. Den använder sig först av funktionen get_techniques för att hämta en lista över alla tekniker i alla projekt. Sedan går den genom varje teknik för sig och listar alla projekt som innehåller den tekniken. Sedan returnerar den projektnummer och projektnamn för dessa projekt i en lista med en dict per projekt. Denna funktion var den första som fungerade på första testförsöket.
+
+19/9
+Idag har vi påbörjat arbetet på funktionen search(). Eftersom denna funktion är mer omfattande fokuserade vi på att lösa en del av den idag. Vi lyckades få funktionen att returnera hela databasen om man inte anger några som helst vilkor. En annan funktion som var med i kravspecen var at man ska kunna hämta poster som innehåller någon av de tekniker man kryssar i. Denna del av sökfunktionen lyckades vi också implementera. Den går igenom all data i databaser och plockar bort poster som inte innehåller någon av de tekniker som användaren har angett. Detta skapade först ett problem vars grund var att listans indexering ändras när man tar bort poster. Vår metod falerade då eftersom vi försökte ta bort poster som hade index som inte fanns längre. Detta korrigerade vi genom att gå igenom listan baklänges så att indexeringen inte ändrades för kvarvarande poster. Detta ledde till önskat resultat. 
+
+20/9
+Idag fortsatte vi att jobba med vår search()-funktion. Vi lyckades lägga till resterande funktionalitet enligt kravspecen. Det uppstod dock en del problem längs vägen. Först hade vi problem att implementera funktionen för fritext-sökning i bestämda fält. I början försökte vi att modifiera en kopia av databasen och ta bort alla fält förutom de angivna, men det resulterade i för mycket onödigt krångel. Till slut genomförde vi det genom att bara kolla de angivna fälten efter matchande fritext. Efter det fortsatte vi med att lägga in sorteringsfunktioner som skulle kunna sortera både stigande och fallande efter givna nyckelvärden. Det löste vi ganska snabbt och fick det att fungera felfritt. Dock gick funktionen inte igenom testfilen, trots att vi får rätt värden när vi anger samma värden för hand. Fortsättning följer på måndag..
+
+21/9
+Idag började vi modifiera vår sökfunktion så att den på något sätt skulle gå igenom testfilen. Det visade sig att felet låg i en temporär lista som vi skapade i funktionen. Sökfunktionen skapar den temporära listan som innehåller samma värden som original-databasen. Sedan utför vi ändringar i den temporära listan och returnerar den medan originallistan förblir oförändrad. Dock visade det sig att vi hade använt oss av en sk. "grund" kopiering (templista = originallista). Dvs att de båda listorna fortfarnde pekade på samma lista i minnet. Vi var tvungna att ändra detta till en sk. "djup" kopiering (templista = list(originallista)) för att skapa en ny lista med samma värden. Då löstes det problemet. 
+
+Därefter uppstod ett annat problem. Vår sökning var inte "case insensitive". Vi löste det genom att göra om både söksträngen och innehållet i fälten vi sökte i till gemener innan vi gjorde jämförelsen. Eftersom vi gjorde denna ändring i den temporära filen kunde vi returnera resultatet oförändrat, medan det blev ändrar till "lower case" i sökningen. 
+
+24/9
+Idag har vi redovisat vår kod för en assistent och fick den godkänd. Han tipsade dock om att vi kanske kunde snygga till vår kod en aning för att öka läsbarheten. Vi ägnade då resten av tillfället till att rensa upp, dela in sökfunktionen i flera underfunktioner, skriva kommentarer mm. 
+
+26/9
+Idag har vi installerat och testat Flask och Jinja2 till python3 då vi innan bara har kunnat köra Flask i python2.7. Detta utgjorde lite av ett problem då vi har skrivit all vår kod i python3. Nu ska det alltså inte vara ett hinder längre.
+
+27/9
+Idag har vi testat lite hur Jinja2 och Flask fungerar. Vi har lyckats göra en HTML-sida till en slags template där vissa värden bestäms av variabler i vår python-kod. Hade dock problem att hämta in css-stylesheet. Får kolla mer på det nästa gång.
+
+30/9
+Idag har vi brottats med att hämta in css-stylesheets. Med en assistents hjälp försökte vi att använda funktionen 'url_for' som finns i flask-modulen. Det visade sig vara problem att använda den utan att skicka med funktionen via en variabel i vår python-fil. Varför det var lösningen kom vi inte riktigt fram till...
+
+3/10
+Idag har vi börjat koppla ihop vårt faktiska datalager som vi skrivit med Flask. Vi har gjort en ny serverfil som kan länka in de sidor som ska finnas på den slutgiltiga portfolion. Sedan har vi testat att importera datalagret och testat att skicka med listan som vår load-funktion returnerar som en variabel till jinja-templaten. All good
+
+7/10
+Idag har vi jobbat med /list-sidan. Vi började med att göra så att den visade sökresultaten på sidan. Därefter satt vi fast på ett syntax-fel hela lektionen. Till slut, efter att ha testat alla möjliga lösningar och kollat på en del exempel, löste vi det.
+
+9/10
+Idag har vi lagt in funktionalitet för "visa-projekt-sidan" utan konstigheter. Sedan började vi implementera mer av funktionaliteten för sökfunktionen. Vi satt fast hela passet med en ofångad exception som generarade en "Bad request" i webbläsaren. Orsaken var en checkruta som saknade värde. När vi lade in ett try-block löstes problemet. 
+
+10/10
+Idag har vi jobbat med sidan /list. Vi har lagt till funktionalitet för att sortera på vissa fält, fritextsökning, att söka i bara vissa fält, och att kunna få träffar på tekniker när man söker på fritext. Den enda funktionen som är kvar att implementera på sidan är att kunna kryssa i tekniker att söka efter.
+
+14/10
+Idag har vi lagt in teknik-checkboxar på sök-sidan, så nu är faktiskt all funktionalitet implementerad. Nu är det bara designen och dokumentationen kvar. Vi har även installerat git och börjat versionshantera med ett repository på github.
