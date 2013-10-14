@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>techniques</title>
+    <metacharset="UTF-8">
+  </head>
+  <body>
+   {% for technique in techs %}
+   <li><a href="http://www.google.com"> {{ technique }} </a>
+   {% endfor %}<br>
+  </body>
+</html>

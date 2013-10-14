@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>List</title>
+    <metacharset="UTF-8">
+  </head>
+  <body> 
+  <form action="list" method="POST">
+    <input name="free_text" placeholder="Sök" value="{{ search_text }}"></input> <input type="submit" value="Sök"><br> 
+    Sort by: 
+    <select name="sort_by_field">
+      {% for key in db[0].keys() %}
+      {% if key != "start_date" %}
+      <option value="{{ key }}">{{ key }}</option>
+      {% else %}
+      <option value="{{ key }}" selected>{{ key }}</option>
+      {% endif %}
+      {% endfor %}
+     </select>
+    <input type="checkbox" name="ascending" value="asc">Ascending
+    <br><br>
+    Search in:<br>
+    {% for key in db[0].keys() %} 
+    <input type="checkbox" name="field_{{ key }}" value="{{ key }}" checked>{{ key }}  
+    {% endfor %} 
+  </form>
+  {% if result %}
+  <h1>Träffar:</h1>
+  {% for project in result %}
+  <li> Projekt: <a href="/project/{{ project.project_no }}">{{ project.project_name }}</a>Startdatum: {{ project.start_date }} Slutdatum: {{ project.end_date }} Bild: {{ project.small_image }} ID: {{ project.project_no }}</li>
+  {% endfor %}
+  {% else %}
+  <p>Inga träffar :(</p>
+  {% endif %}
+  </body>
+</html>

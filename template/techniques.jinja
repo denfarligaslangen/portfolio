@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>techniques</title>
+    <metacharset="UTF-8">
+  </head>
+  <body>
+   {% for technique in techs %}
+   <li><a href="" title="{% for i in stats[technique] %}Projekt: {{ i.name }} ID: {{ i.id }} {% endfor %}"> {{ technique }} </a></li>
+   {% endfor %}<br>
+  </body>
+</html>
