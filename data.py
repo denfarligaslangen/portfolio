@@ -7,12 +7,31 @@ import random
 def load(file_name):
     """Loads a .json file with a given filename. Returns None if file is not found. Returns a list if all is well."""
     try:
-        with open(file_name) as f:
+        with open(file_name,"r") as f:
             data = json.load(f)
             return data
     
     except:
         return None
+
+def add_project():
+    herk
+
+def remove_project(file_name,db,ID):
+    for i in range(len(db)):
+        if db[i]['project_no'] == ID:
+            db.pop(i)
+            break
+        elif i == len(db) - 1:
+            return None
+
+    with open(file_name, "w") as f:
+        f.write("{}".format(json.dumps(db, indent=2)))
+
+    return db
+
+def edit_project():
+    herp
 
 def get_project_count(db):
     """Returns the current number of projects as an integer"""

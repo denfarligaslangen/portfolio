@@ -5,12 +5,15 @@ import flask
 import jinja2
 import os
 import data
+import logging
 
 env = jinja2.Environment(loader=jinja2.FileSystemLoader( searchpath=os.getcwd()+"/template" ))
 
 app = flask.Flask(__name__)
 
 app.debug = True
+
+logging.basicConfig(filename='log.txt', level=logging.INFO)
 
 @app.route('/')
 def root():
@@ -83,6 +86,8 @@ def mylist():
     template = env.get_template( template_file )
     templateVars = { "result" : result, "db" : database, "search_text" : search_text, "techs": tech_list, "checked_fields": field_list, "checked_techs": checked_tech_list }
 
+    logging.info('Searched for: '+search_text)
+
     return template.render( templateVars )
 
 @app.route('/techniques')
@@ -109,3 +114,4 @@ def project(projectID):
 
 if __name__ == '__main__':
     app.run()
+    
