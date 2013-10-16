@@ -14,10 +14,25 @@ def load(file_name):
     except:
         return None
 
-def add_project():
-    herk
+def add_project(db, file_name, project):
+    """Appends a given project to a given database and writes the database to a given file in json format"""
+    project_id_list = []
+    for i in range(len(db)):
+        project_id_list.append(db[i]['project_no'])
+    new_project_id = max(project_id_list) + 1
+    
+    project['project_no'] = new_project_id
+    db.append(project)
 
-def remove_project(file_name,db,ID):
+    try:
+        with open(file_name, "w") as f:
+            f.write("{}".format(json.dumps(db, indent=2)))
+        return db
+    except:
+        return None
+
+def remove_project(db, file_name, ID):
+    """Removes a project with a given ID from a given database and writes the database to a given file in json format"""
     for i in range(len(db)):
         if db[i]['project_no'] == ID:
             db.pop(i)
@@ -25,23 +40,35 @@ def remove_project(file_name,db,ID):
         elif i == len(db) - 1:
             return None
 
-    with open(file_name, "w") as f:
-        f.write("{}".format(json.dumps(db, indent=2)))
+    try:
+        with open(file_name, "w") as f:
+            f.write("{}".format(json.dumps(db, indent=2)))
+        return db
+    except:
+        return None
 
-    return db
+def edit_project(db, file_name, ID, project):
+    """Overwrites a project in a given db with a given project at a given ID and then writes the db to a given file in json format"""
+    for i in range(len(db)):
+        if db[i]['project_no'] == ID:
+            db[i] = project
 
-def edit_project():
-    herp
+    try:
+        with open(file_name, "w") as f:
+            f.write("{}".format(json.dumps(db, indent=2)))
+        return db
+    except:
+        return None
 
 def get_project_count(db):
     """Returns the current number of projects as an integer"""
     return len(db)
 
-def get_project(db, id):
+def get_project(db, ID):
     """Returns specific project by a given ID"""
     for i in range(len(db)):
         project_data = db[i]
-        if project_data.get('project_no') == id:
+        if project_data.get('project_no') == ID:
             return project_data
 
     return None

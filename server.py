@@ -112,6 +112,15 @@ def project(projectID):
 
     return template.render( templateVars )
 
+@app.route('/admin')
+def admin():
+    db = data.load("data.json")
+
+    template_file = "admin.jinja"
+    template = env.get_template( template_file )
+    templateVars = {  }
+
+    return template.render( templateVars )
+
 if __name__ == '__main__':
     app.run()
-    

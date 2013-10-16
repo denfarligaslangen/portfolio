@@ -48,3 +48,9 @@ Idag har vi jobbat med sidan /list. Vi har lagt till funktionalitet för att sor
 
 14/10
 Idag har vi lagt in teknik-checkboxar på sök-sidan, så nu är faktiskt all funktionalitet implementerad. Nu är det bara designen och dokumentationen kvar. Vi har även installerat git och börjat versionshantera med ett repository på github.
+
+15/10
+Idag har vi jobbat med lite olika saker. Dels har vi lagt till en remove_project-funktion i vårt datalager. Tanken är att vi även ska lägga till en skapa-projekt- och en ändra-i-projekt-funktion. Vi har även skrivit på dokumentationen och skaffat gitk för att hålla koll på historiken i vårt git-repository.
+
+16/10
+Idag har vi skrivit massor med dokomentation till systemet. Vi har också skrivit add_project och edit_project-funktioner till datalagret. Det hela har gått väldigt smärtfritt. Vi har även börjat tänka på implementationen av våra nya funktioner på hemsidan. Vi börjar känna oss stressade inför dokumentationsinlämning och projektredovisning... Möjligtvis en naturlig känsla, men vi har faktiskt en hel del kvar...
