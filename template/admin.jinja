@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simthebl Portfolio</title>
+    <metacharset="UTF-8">
+  </head>
+  <body>
+   {% if is_logged_in %}
+   <a href="admin/addit">Add project</a><br><br>
+      {% for project in db %}
+      	 {{ project.project_name }} {{ project.small_image }} {{ project.short_description }}<br>
+	 <form name="r" method="POST" action="admin">
+	   <input type="hidden" name="remove" value="{{ project.project_no }}">
+	   <input type="hidden" name="user_name" value="{{ user_name }}">
+	   <input type="hidden" name="passwd" value="{{ passwd }}">
+	   <input type="submit" value="Remove"></input>
+	 </form>
+	 <form name="e" method="POST" action="admin/addit">
+	   <input type="hidden" name="edit" value="{{ project.project_no }}">
+	   <input type="hidden" name="user_name" value="{{ user_name }}">
+	   <input type="hidden" name="passwd" value="{{ passwd }}">
+	   <input type="submit" value="Edit"></input>
+	 </form>
+	 <br><br>
+      {% endfor %}
+   {% else %}
+      Du är inte inloggad!
+      <form name="login" method="POST" action="admin">
+      	    <input name="user_name" placeholder="Username"></input><br>
+	    <input type="password" name="passwd" placeholder="Password"></input>
+	    <input type="hidden" name="remove" value="Inget"><br>
+	    <input type="submit" value="Log in"></input>
+      </form>
+   {% endif %}
+  </body>
+</html>

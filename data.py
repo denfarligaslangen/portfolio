@@ -19,7 +19,11 @@ def add_project(db, file_name, project):
     project_id_list = []
     for i in range(len(db)):
         project_id_list.append(db[i]['project_no'])
-    new_project_id = max(project_id_list) + 1
+
+    if len(project_id_list) != 0:
+        new_project_id = max(project_id_list) + 1
+    else:
+        new_project_id = 1
     
     project['project_no'] = new_project_id
     db.append(project)

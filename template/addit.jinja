@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simthebl Portfolio</title>
+    <metacharset="UTF-8">
+  </head>
+  <body>
+    <form name="projectform" action="addit" method="POST">
+   {% for key in project.keys() %}
+   {% if key == 'project_no' %}
+   <input type="hidden" name="{{ key }}" value="{{ project[key] }}"></input>
+   {% else %}
+   {{ key }} <input name="{{ key }}" value="{{ project[key] }}"></input><br>
+   {% endif %}
+   {% endfor %}
+   <input type="hidden" name="user_name" value="{{ user_name }}">
+   <input type="hidden" name="passwd" value="{{ passwd }}">
+   <input type="hidden" name="edit" value="{{ project.project_no }}">
+   Project no : {{ project.project_no }}
+   <input type="submit" value="Submit">
+   </form>
+  </body>
+</html>
