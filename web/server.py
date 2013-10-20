@@ -138,7 +138,8 @@ def admin():
 @app.route('/admin/addit', methods=['GET', 'POST'])
 def addit():
     db = data.load("data.json")
-    project = data.load('empty_project.json')
+    projectdb = data.load('empty_project.json')
+    project = projectdb[0]
 
     is_logged_in = False
     user = ""
@@ -151,17 +152,21 @@ def addit():
         
         try:
             for key in project.keys():
-                if key == 'group_size' or key == 'project_no':
+                if key == 'project_no' and not edit.isdigit():
+                    project[key] = flask.request.form[key]
+                elif key == 'group_size' or key == 'project_no':
                     project[key] = int(flask.request.form[key])
                 elif key == 'techniques_used':
                     project[key] = [s.strip("' ") for s in flask.request.form[key][1:-1].split(',')]
                 else:
                     project[key] = flask.request.form[key]
-                print(project[key])
+                print(key+":",project[key])
 
-            if edit == "":
+            if not edit.isdigit():
+                print('add')
                 db = data.add_project(db,'data.json',project)
             else:
+                print('edit')
                 db = data.edit_project(db,'data.json',int(flask.request.form['project_no']),project)
         except:
             print('except edit')
@@ -177,5 +182,6 @@ def addit():
     templateVars = { 'db':db, 'is_logged_in': is_logged_in, 'user_name': user, 'passwd': passwd, 'project': project }
 
     return template.render( templateVars )
+
 if __name__ == '__main__':
     app.run()

@@ -2,11 +2,11 @@
 <html>
   <head>
     <title>List</title>
-    <metacharset="UTF-8">
+    <meta charset="UTF-8">
   </head>
   <body> 
   <form action="list" method="POST">
-    <input name="free_text" placeholder="Sök" value="{{ search_text }}"></input> <input type="submit" value="Sök"><br> 
+    <input name="free_text" placeholder="Sök" value="{{ search_text }}"> <input type="submit" value="Sök"><br> 
     Sort by: 
     <select name="sort_by_field">
       {% for key in db[0].keys() %}
@@ -30,9 +30,11 @@
   </form>
   {% if result %}
   <h1>Träffar:</h1>
+  <ul>
   {% for project in result %}
   <li> Projekt: <a href="/project/{{ project.project_no }}">{{ project.project_name }}</a>Startdatum: {{ project.start_date }} Slutdatum: {{ project.end_date }} Bild: {{ project.small_image }} ID: {{ project.project_no }}</li>
   {% endfor %}
+  </ul>
   {% else %}
   <p>Inga träffar :(</p>
   {% endif %}

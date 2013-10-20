@@ -2,11 +2,13 @@
 <html>
   <head>
     <title>Simthebl Portfolio</title>
-    <metacharset="UTF-8">
+    <meta charset="UTF-8">
   </head>
   <body>
+    <ul>
    {% for technique in techs %}
    <li><a href="" title="{% for i in stats[technique] %}Projekt: {{ i.name }} ID: {{ i.id }} {% endfor %}"> {{ technique }} </a></li>
-   {% endfor %}<br>
+   {% endfor %}
+   </ul>
   </body>
 </html>
