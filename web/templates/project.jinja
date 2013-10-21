@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Simthebl Portfolio</title>
-    <meta charset="UTF-8">
-  </head>
-  <body>
-    {{ project }}
-  </body>
-</html>
+{% extends "layout.jinja" %}
+{% block content %}
+<h2>{{ project.project_name }}</h2>
+{{ project }}
+{% endblock %}

@@ -17,98 +17,127 @@ logging.basicConfig(filename='log.txt', level=logging.INFO)
 
 @app.route('/')
 def root():
+    status = 0
     db = data.load("data.json")
-    small_image, project_name, short = data.get_random_projects(db)
+    if db == None: 
+        status = 1
+    else:
+        small_image, project_name, short = data.get_random_projects(db)
     
     template_file = "root.jinja"
     template = env.get_template( template_file )
-    templateVars = { "project" : str(project_name), "thumb" : small_image, "short_desc" : short, "style": flask.url_for('static',filename='style.css')  }
+    if status == 0:
+        templateVars = { "status": status, "project" : str(project_name), "thumb" : small_image, "short_desc" : short, "style": flask.url_for('static',filename='style.css')  }
+    elif status == 1:
+        templateVars = { "status": status, "style": flask.url_for('static',filename='style.css') }
     
     return template.render( templateVars )
 
 @app.route('/list', methods=['GET', 'POST'])
 def mylist():
+    status = 0
     db = data.load("data.json")
-    tech_list = data.get_techniques(db)
-    search_text = None
-    field_list = []
-    checked_tech_list = []
-
-    if flask.request.method == 'POST':
-        sort_o = u'desc'
-        sort_by_field = 'start_date'
-        key_number = 0
-        tech_number = 0
-        
-        for key in db[0].keys():
-            key_number += 1
-            try:
-                field_list.append(flask.request.form['field_'+key])
-            except:
-                if key_number == len(db[0]) and field_list == []:
-                    field_list = None
-                print("except herk")
-
-        for tech in tech_list:
-            tech_number += 1
-            try:
-                checked_tech_list.append(flask.request.form['tech_'+tech])
-            except:
-                if tech_number == len(tech_list) and checked_tech_list == []:
-                    checked_tech_list = None
-                print("Except 5")
-
-        try:
-            sort_by_field = (flask.request.form['sort_by_field'])
-        except:
-            print("Except4")
-        
-        try:
-            search_text = flask.request.form['free_text']
-            if search_text == "":
-                search_text = None
-        except:
-            print("except")
-
-        try:
-            sort_o = flask.request.form['ascending']
-        except:
-            print("except2")
-        
-        result = data.search(db=db, sort_by=sort_by_field, sort_order=sort_o, search=search_text, techniques=checked_tech_list, search_fields=field_list)
-        
+    if db == None:
+        status = 1
     else:
-        result = data.search(db=db)
+        tech_list = data.get_techniques(db)
+        search_text = None
+        field_list = []
+        checked_tech_list = []
 
-    if search_text == None: search_text = ""
+        if flask.request.method == 'POST':
+            sort_o = u'desc'
+            sort_by_field = 'start_date'
+            key_number = 0
+            tech_number = 0
+        
+            for key in db[0].keys():
+                key_number += 1
+                try:
+                    field_list.append(flask.request.form['field_'+key])
+                except:
+                    if key_number == len(db[0]) and field_list == []:
+                        field_list = None
+                    print("except herk")
+
+            for tech in tech_list:
+                tech_number += 1
+                try:
+                    checked_tech_list.append(flask.request.form['tech_'+tech])
+                except:
+                    if tech_number == len(tech_list) and checked_tech_list == []:
+                        checked_tech_list = None
+                    print("Except 5")
+
+            try:
+                sort_by_field = (flask.request.form['sort_by_field'])
+            except:
+                print("Except4")
+        
+            try:
+                search_text = flask.request.form['free_text']
+                if search_text == "":
+                    search_text = None
+            except:
+                print("except")
+
+                try:
+                    sort_o = flask.request.form['ascending']
+                except:
+                    print("except2")
+        
+            result = data.search(db=db, sort_by=sort_by_field, sort_order=sort_o, search=search_text, techniques=checked_tech_list, search_fields=field_list)
+        
+        else:
+            result = data.search(db=db)
+
+        if search_text == None: search_text = ""
 
     template_file = "list.jinja"
     template = env.get_template( template_file )
-    templateVars = { "result" : result, "db" : db, "search_text" : search_text, "techs": tech_list, "checked_fields": field_list, "checked_techs": checked_tech_list }
-
-    logging.info('Searched for: '+search_text)
+    if status == 0:
+        templateVars = { "status": status, "result" : result, "db" : db, "search_text" : search_text, "techs": tech_list, "checked_fields": field_list, "checked_techs": checked_tech_list, "style": flask.url_for('static',filename='style.css') }
+        logging.info('Searched for: '+search_text)
+    elif status == 1:
+        templateVars = { "status": status, "style" : flask.url_for('static',filename='style.css') }
 
     return template.render( templateVars )
 
 @app.route('/techniques')
 def techniques():
+    status = 0
     db = data.load("data.json")
-    techs = data.get_techniques(db)
+    if db == None:
+        status = 1
+    else:
+        techs = data.get_techniques(db)
 
     template_file = "techniques.jinja"
     template = env.get_template( template_file )
-    templateVars = { "techs" : techs, "stats" : data.get_technique_stats(db) }
+    if status == 0:
+        templateVars = { "status": status, "techs" : techs, "stats" : data.get_technique_stats(db), "style": flask.url_for('static',filename='style.css') }
+    else:
+        templateVars = { "status": status }
 
     return template.render( templateVars )
 
 @app.route('/project/<projectID>')
 def project(projectID):
+    status = 0
     db = data.load('data.json')
-    p = data.get_project(db, int(projectID))
+    if db == None:
+        status = 1
+    else:
+        p = data.get_project(db, int(projectID))
+        if p == None:
+            status = 2
 
     template_file = "project.jinja"
     template = env.get_template( template_file )
-    templateVars = { "project": p }
+    if status == 0:
+        templateVars = { "status": status, "project": p, "style": flask.url_for('static',filename='style.css') }
+    else:
+        templateVars = { "status": status }
 
     return template.render( templateVars )
 
@@ -160,13 +189,10 @@ def addit():
                     project[key] = [s.strip("' ") for s in flask.request.form[key][1:-1].split(',')]
                 else:
                     project[key] = flask.request.form[key]
-                print(key+":",project[key])
 
             if not edit.isdigit():
-                print('add')
                 db = data.add_project(db,'data.json',project)
             else:
-                print('edit')
                 db = data.edit_project(db,'data.json',int(flask.request.form['project_no']),project)
         except:
             print('except edit')

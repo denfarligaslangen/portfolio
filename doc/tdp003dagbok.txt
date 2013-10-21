@@ -54,3 +54,9 @@ Idag har vi jobbat med lite olika saker. Dels har vi lagt till en remove_project
 
 16/10
 Idag har vi skrivit massor med dokomentation till systemet. Vi har också skrivit add_project och edit_project-funktioner till datalagret. Det hela har gått väldigt smärtfritt. Vi har även börjat tänka på implementationen av våra nya funktioner på hemsidan. Vi börjar känna oss stressade inför dokumentationsinlämning och projektredovisning... Möjligtvis en naturlig känsla, men vi har faktiskt en hel del kvar...
+
+17/10
+Idag har vi skrivit klart dokumentationen och skickat in den. Vi har även implementerat admin-sektionen av hemsidan. Vi har lyckats få allt att fungera felfritt förutom add project som genererar en del buggar. Dels lägger den till projekt men inte alla fält, eller så hoppar den till edit-funktionen istället. Får titta mer på detta nästa gång.
+
+19/10
+Idag löste vi add-funktionen på sidan. Det visade sig att det rörde sig om datatyps/konverteringsfel som så många gånger förr. Nu är felet fångat och fixat, så nu funkar funktionen. Har även jobbat med sidans design med css. Upptäckte även att hela sidan validerar i HTML5 och CSS3. Nu är det bara lite på designen och felkoder kvar att koda. Sen är allt klar!

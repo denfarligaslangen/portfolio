@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>List</title>
-    <meta charset="UTF-8">
-  </head>
-  <body> 
+{% extends "layout.jinja" %}
+{% block content %}
+   <h2>Projekt</h2>
   <form action="list" method="POST">
     <input name="free_text" placeholder="Sök" value="{{ search_text }}"> <input type="submit" value="Sök"><br> 
     Sort by: 
     <select name="sort_by_field">
-      {% for key in db[0].keys() %}
+      {% for key in db[0].keys()|sort() %}
       {% if key != "start_date" %}
       <option value="{{ key }}">{{ key }}</option>
       {% else %}
@@ -38,5 +34,4 @@
   {% else %}
   <p>Inga träffar :(</p>
   {% endif %}
-  </body>
-</html>
+{% endblock %}

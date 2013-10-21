@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simthebl Portfolio</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{{ style }}">
+  </head>
+  <body>
+    {% if status == 0: %}
+    <header>
+      <h1>SimThebl Portfolio</h1>
+      <form action="list" method="POST">
+	<input name="free_text" placeholder="Sök">
+	<input type="submit" value="Sök projekt">
+      </form>
+    </header>
+    <nav>
+	<ul>  
+          <li><a href="/">Start</a></li>
+	  <li><a href="/list">Projekt</a></li>
+	  <li><a href="/techniques">Tekniker</a></li>
+	</ul>
+      </nav>
+    <section>
+      <article>
+      {% block content %} {% endblock %}
+      </article>
+    </section>
+    <footer>
+      Copyright Simthebl
+    </footer>
+    {% elif status == 1: %}
+    <h2>Projektdatabasen hittades inte!</h2>
+    {% elif status == 2: %}
+    <h2>Det finns inget projekt med detta ID!</h2>
+    {% endif %}
+  </body>
+</html>
