@@ -1,9 +1,9 @@
 {% extends "layout.jinja" %}
 {% block content %}
-   <h2>Projekt</h2>
+   <h3>PROJEKT</h3>
   <form action="list" method="POST">
-    <input name="free_text" placeholder="Sök" value="{{ search_text }}"> <input type="submit" value="Sök"><br> 
-    Sort by: 
+    <input name="free_text" placeholder="Avancerad sök" value="{{ search_text }}"> <input type="submit" value="Sök"><br> 
+    <p>Sortera efter fält:
     <select name="sort_by_field">
       {% for key in db[0].keys()|sort() %}
       {% if key != "start_date" %}
@@ -13,19 +13,26 @@
       {% endif %}
       {% endfor %}
      </select>
-    <input type="checkbox" name="ascending" value="asc">Ascending
-    <br><br>
-    Search in:<br>
+    <input type="checkbox" name="ascending" value="asc">Stigande</p>
+    <p>Sök i fält:</p>
+    <ul>
     {% for key in db[0].keys() %}
-    <input type="checkbox" name="field_{{ key }}" value="{{ key }}" {% if checked_fields != None and key in checked_fields %}checked{% endif %}>{{ key }}  
-    {% endfor %} <br><br>
-    Måste innehålla tekniker:<br>
-    {% for tech in techs %}
-    <input type="checkbox" name="tech_{{ tech }}" value="{{ tech }}" {% if checked_techs != None and tech in checked_techs %}checked{% endif %}>{{ tech }}  
+    <li>
+    <input type="checkbox" name="field_{{ key }}" value="{{ key }}" {% if checked_fields != None and key in checked_fields %}checked{% endif %}>{{ key }}
+    </li>  
     {% endfor %}
+    </ul>
+    <p>Måste innehålla tekniker:</p>
+    <ul>
+    {% for tech in techs %}
+    <li>
+    <input type="checkbox" name="tech_{{ tech }}" value="{{ tech }}" {% if checked_techs != None and tech in checked_techs %}checked{% endif %}>{{ tech }}  
+    </li>
+    {% endfor %}
+    </ul>
   </form>
   {% if result %}
-  <h1>Träffar:</h1>
+  <h3>Träffar:</h3>
   <ul>
   {% for project in result %}
   <li> Projekt: <a href="/project/{{ project.project_no }}">{{ project.project_name }}</a>Startdatum: {{ project.start_date }} Slutdatum: {{ project.end_date }} Bild: {{ project.small_image }} ID: {{ project.project_no }}</li>

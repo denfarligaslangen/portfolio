@@ -4,11 +4,12 @@
     <title>Simthebl Portfolio</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="{{ style }}">
+    <link href="http://fonts.googleapis.com/css?family=Lato:100,900" rel="stylesheet" type="text/css">
   </head>
   <body>
     {% if status == 0: %}
     <header>
-      <h1>SimThebl Portfolio</h1>
+      <h1>SIMTHEBL PORTFOLIO</h1><h2>.</h2>
       <form action="list" method="POST">
 	<input name="free_text" placeholder="Sök">
 	<input type="submit" value="Sök projekt">
@@ -27,7 +28,7 @@
       </article>
     </section>
     <footer>
-      Copyright Simthebl
+      <h4>&#169;</h4> <p>Simthebl 2013</p>
     </footer>
     {% elif status == 1: %}
     <h2>Projektdatabasen hittades inte!</h2>

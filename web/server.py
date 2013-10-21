@@ -27,9 +27,9 @@ def root():
     template_file = "root.jinja"
     template = env.get_template( template_file )
     if status == 0:
-        templateVars = { "status": status, "project" : str(project_name), "thumb" : small_image, "short_desc" : short, "style": flask.url_for('static',filename='style.css')  }
+        templateVars = { "status": status, "project" : str(project_name), "thumb" : small_image, "short_desc" : short, "style": flask.url_for('static',filename='style.css'), "pic": flask.url_for('static', filename="") }
     elif status == 1:
-        templateVars = { "status": status, "style": flask.url_for('static',filename='style.css') }
+        templateVars = { "status": status, "style": flask.url_for('static', filename="style.css") }
     
     return template.render( templateVars )
 
