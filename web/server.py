@@ -7,9 +7,9 @@ import os
 import data
 import logging
 
-env = jinja2.Environment(loader=jinja2.FileSystemLoader( searchpath=os.getcwd()+"/template" ))
+env = jinja2.Environment(loader=jinja2.FileSystemLoader( searchpath=os.getcwd()+"/templates" ))
 
-app = flask.Flask(__name__)
+app = flask.Flask(__name__, static_folder='style')
 
 app.debug = True
 
@@ -22,7 +22,7 @@ def root():
     
     template_file = "root.jinja"
     template = env.get_template( template_file )
-    templateVars = { "project" : str(project_name), "thumb" : small_image, "short_desc" : short  }
+    templateVars = { "project" : str(project_name), "thumb" : small_image, "short_desc" : short, "style": flask.url_for('static',filename='style.css')  }
     
     return template.render( templateVars )
 

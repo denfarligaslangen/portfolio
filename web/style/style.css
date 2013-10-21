@@ -1,0 +1,79 @@
+article, aside, figure, footer, header, hgroup, nav, section { display:block; }
+
+body {
+    margin: 0;
+    background-color: #FFFFFF;
+    padding: 0;
+}
+
+nav {
+    background-color: #999999;
+    height: 30px;
+    width: 85%;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+}
+
+nav ul {
+    width: 80%;
+    list-style: none;
+    display: table;
+    margin: 0 auto;
+}
+
+nav li {
+    display: table-cell;
+    padding-top: 5px;
+}
+
+nav a {
+    display: block;
+}
+
+header {
+    height: 200px;
+    width: 85%;
+    margin: 0 auto;
+    background-color: #CCCCCC;
+}
+
+header form {
+    float: right;
+}
+
+footer {
+    text-align: center;
+    height: 150px;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #CCCCCC;
+}
+
+section {
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 20px;
+    padding-bottom: 80px;
+    background-color: #EEEEEE;
+}
+
+article {
+    margin-left: 10%;
+    margin-right: 10%;
+    background-color: #EEEEEE;
+}
+
+h1 {
+    font-size: 28px;
+}
+
+h2 {
+    font-size: 48px;
+}
+
+p {
+    font-size: 14px;
+}
