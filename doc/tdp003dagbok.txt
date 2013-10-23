@@ -58,5 +58,17 @@ Idag har vi skrivit massor med dokomentation till systemet. Vi har också skrivi
 17/10
 Idag har vi skrivit klart dokumentationen och skickat in den. Vi har även implementerat admin-sektionen av hemsidan. Vi har lyckats få allt att fungera felfritt förutom add project som genererar en del buggar. Dels lägger den till projekt men inte alla fält, eller så hoppar den till edit-funktionen istället. Får titta mer på detta nästa gång.
 
-19/10
+20/10
 Idag löste vi add-funktionen på sidan. Det visade sig att det rörde sig om datatyps/konverteringsfel som så många gånger förr. Nu är felet fångat och fixat, så nu funkar funktionen. Har även jobbat med sidans design med css. Upptäckte även att hela sidan validerar i HTML5 och CSS3. Nu är det bara lite på designen och felkoder kvar att koda. Sen är allt klar!
+
+21/10
+Idag har sidans css-design fått sig ett ansiktslyft. Inget hände egentligen med sidans funktionalitet, dock ser den nästan helt annorlunda ut. Vi lade in en bil på oss själva på startsidan, valde passande fonter till all text och jobbade fram ett färgschema.
+
+22/10
+Idag har vi fortsatt lite med det sista småpillet på deisgnen. Vi har även lagt till bilder för alla projekt i databasen, så vi har något att visa upp på seminariet. På seminariet fick resten av klassen testa vår sida. De hittade faktiskt en del buggar, bl.a. kraschade sidan när man sökte på tekniker samtidigt som man hade kryssat i tekniker. Sidan kraschade när man skrev in dravel i adressfältet. Det gick inte att sortera sökträffar i stigande ordning heller.
+
+23/10
+Idag har vi fixat buggarna som hittades igår och slutfört designen (tror vi). Buggarna var relativt enkla att åtgärda nu när vi har fått reda på dem, det hela tog ungefär en och en halv timme. Designen var också relativt lätt att lösa. Lite småproblem när css-element ärver egenskaper från andra. Dock inte överdrivet svårlöst. 
+
+24/10
+Nothing important happened today.

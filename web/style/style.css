@@ -6,7 +6,7 @@ body {
     padding: 0;
 }
 
-nav {
+body nav {
     border-top: 3px solid #DA4D00;
     background-color: #AAAAAA;
     height: 30px;
@@ -16,38 +16,48 @@ nav {
     text-align: center;
 }
 
-nav ul {
+body nav ul {
     width: 80%;
     list-style: none;
     display: table;
     margin: 0 auto;
 }
 
-nav li {
+body nav li {
     display: table-cell;
     padding-top: 6px;
 }
 
-nav a {
+body nav a {
     text-decoration: none;
     font-family: "Lato", sans-serif;
     font-weight: 900;
     font-size: 14px;
 }
 
-nav a:link {
+a {
+    text-decoration: none;
+    font-family: "Lato", sans-serif;
+    font-weight: 900;
+}
+
+a:link {
     color: #000000;
 }   
 
-nav a:visited {
+a:visited {
     color: #000000;
 } 
 
 nav a:hover {
     color: #EEEEEE;
-} 
+}
 
-nav a:active {
+a:hover {
+    color: #AAAAAA;
+}
+
+a:active {
     color: #FFFFFF;
 }
 
@@ -114,6 +124,18 @@ article section {
     margin-left: -8.5%;
 }
 
+section article ul {
+    list-style: none;
+}
+
+section article ul ul {
+    display: none;
+}
+
+section article ul li:hover > ul {
+    display: block;
+}
+
 h1 {
     display: inline;
     color: #FFFFFF;
@@ -158,8 +180,7 @@ figure {
     margin: 0 auto;
     width: 100%;
     display: inline-block;
-    border-top: 1px dotted #333333;
-    border-bottom: 1px dotted #333333;
+    border-top: 3px groove #AAAAAA;
 }
 
 figure img {
@@ -167,6 +188,7 @@ figure img {
     margin: 0 0;
     height: 160px;
     width: 160px;
+    margin-right: 10px;
 }
 
 figcaption {

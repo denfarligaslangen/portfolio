@@ -22,12 +22,12 @@ def root():
     if db == None: 
         status = 1
     else:
-        small_image, project_name, short = data.get_random_projects(db)
+        small_image, project_name, short, projectID = data.get_random_projects(db)
     
     template_file = "root.jinja"
     template = env.get_template( template_file )
     if status == 0:
-        templateVars = { "status": status, "project" : str(project_name), "thumb" : small_image, "short_desc" : short, "style": flask.url_for('static',filename='style.css'), "pic": flask.url_for('static', filename="") }
+        templateVars = { "status": status, "project" : str(project_name), "pid": projectID, "thumb" : small_image, "short_desc" : short, "style": flask.url_for('static',filename='style.css'), "pic": flask.url_for('static', filename="") }
     elif status == 1:
         templateVars = { "status": status, "style": flask.url_for('static', filename="style.css") }
     
@@ -58,7 +58,6 @@ def mylist():
                 except:
                     if key_number == len(db[0]) and field_list == []:
                         field_list = None
-                    print("except herk")
 
             for tech in tech_list:
                 tech_number += 1
@@ -67,24 +66,20 @@ def mylist():
                 except:
                     if tech_number == len(tech_list) and checked_tech_list == []:
                         checked_tech_list = None
-                    print("Except 5")
 
             try:
                 sort_by_field = (flask.request.form['sort_by_field'])
             except:
-                print("Except4")
+                pass
         
-            try:
-                search_text = flask.request.form['free_text']
-                if search_text == "":
-                    search_text = None
-            except:
-                print("except")
+            search_text = flask.request.form['free_text']
+            if search_text == "":
+                search_text = None
 
-                try:
-                    sort_o = flask.request.form['ascending']
-                except:
-                    print("except2")
+            try:
+                sort_o = flask.request.form['ascending']
+            except:
+                pass
         
             result = data.search(db=db, sort_by=sort_by_field, sort_order=sort_o, search=search_text, techniques=checked_tech_list, search_fields=field_list)
         
@@ -96,7 +91,7 @@ def mylist():
     template_file = "list.jinja"
     template = env.get_template( template_file )
     if status == 0:
-        templateVars = { "status": status, "result" : result, "db" : db, "search_text" : search_text, "techs": tech_list, "checked_fields": field_list, "checked_techs": checked_tech_list, "style": flask.url_for('static',filename='style.css') }
+        templateVars = { "status": status, "result" : result, "db" : db, "search_text" : search_text, "techs": tech_list, "checked_fields": field_list, "checked_techs": checked_tech_list, "style": flask.url_for('static',filename='style.css'), "pic": flask.url_for('static', filename="") }
         logging.info('Searched for: '+search_text)
     elif status == 1:
         templateVars = { "status": status, "style" : flask.url_for('static',filename='style.css') }
@@ -128,7 +123,11 @@ def project(projectID):
     if db == None:
         status = 1
     else:
-        p = data.get_project(db, int(projectID))
+        if projectID.isdigit():
+            projectID = int(projectID)
+
+        p = data.get_project(db, projectID)
+
         if p == None:
             status = 2
 
@@ -195,7 +194,7 @@ def addit():
             else:
                 db = data.edit_project(db,'data.json',int(flask.request.form['project_no']),project)
         except:
-            print('except edit')
+            logging.info('Error when trying to add or edit post in db')
 
         if user == 'admin' and passwd == 'h':
             is_logged_in = True
@@ -208,6 +207,10 @@ def addit():
     templateVars = { 'db':db, 'is_logged_in': is_logged_in, 'user_name': user, 'passwd': passwd, 'project': project }
 
     return template.render( templateVars )
+
+@app.errorhandler(404)
+def error_page(error):
+    return "<h2>Quoth the server: 404 >:)</h2>"
 
 if __name__ == '__main__':
     app.run()

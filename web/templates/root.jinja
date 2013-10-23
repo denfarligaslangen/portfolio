@@ -5,10 +5,10 @@
 <img src="{{ pic }}simtheo.png" alt="Simon och Theodor">
 <p>Slumpmässigt projekt:</p>
 <figure>
-  <img src="{{ pic }}google-io.png">
-  <h5>{{ project }}</h5>
+  <img src="{{ pic }}{{ thumb }}">
+  <h5><a href="/project/{{ pid }}">{{ project }}</a></h5>
   <p> 
-  thumb_nail: {{ thumb }} desc {{ short_desc }}
+  Description: {{ short_desc }}
   </p>
 </figure>
 {% endblock %}

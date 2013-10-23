@@ -143,7 +143,7 @@ def field_search(search_result, search, search_fields, remove_result):
                             found_tech = True
                     if not found_tech:
                         field_count += 1
-                        if field_count == len(search_fields):
+                        if field_count == len(search_fields) and i not in remove_result:
                             remove_result.insert(0, i)
 
 def get_techniques(db):
@@ -183,5 +183,7 @@ def get_random_projects(db):
     image = db[proj_i]["small_image"]
     name = db[proj_i]["project_name"]
     short = db[proj_i]["short_description"]
-    return image, name, short
+    project_id = db[proj_i]["project_no"]
+
+    return image, name, short, project_id
 

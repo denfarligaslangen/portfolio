@@ -2,8 +2,15 @@
 {% block content %}
 <h3>TEKNIKER</h3>
 <ul>
-{% for technique in techs %}
-<li><a href="" title="{% for i in stats[technique] %}Projekt: {{ i.name }} ID: {{ i.id }} {% endfor %}"> {{ technique }} </a></li>
-{% endfor %}
+	   {% for technique in techs %}
+	   <li>
+		<h5>{{ technique }}</h5>
+		<ul>
+		{% for i in stats[technique] %}
+		   <li><a href="/project/{{ i.id }}">{{ i.name }}</a></li>
+		{% endfor %}
+		</ul>
+	   </li>
+	   {% endfor %}
 </ul>
 {% endblock %}

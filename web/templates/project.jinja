@@ -1,5 +1,7 @@
 {% extends "layout.jinja" %}
 {% block content %}
-<h2>{{ project.project_name }}</h2>
-{{ project }}
+<h3>{{ project.project_name }}</h3>
+{% for key in project.keys() %}
+<p>{{ project[key] }}</p><br>
+{% endfor %}
 {% endblock %}
