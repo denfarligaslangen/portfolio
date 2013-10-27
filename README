@@ -1,1 +1,10 @@
-Här ska vi skriva en readme
+Thanks for using SimThebl Portfolio!
+
+You can find installation instructions, users manual, system documentation and a description of system tests in:
+
+    /doc/portfoliodokumentation_TDP003_version2_simgu002_thebl297.pdf
+    (the document is in swedish)
+
+/web contains the whole system. See the system documentation for more info.
+
+A good day to you!
