@@ -35,7 +35,7 @@
   <h3>Träffar:</h3>
   {% for project in result %}
   <figure>
-  <img src="{{ pic }}{{ project.small_image }}" alt="{{ pic }}{{ project.small_image }}"><h5><a href="/project/{{ project.project_no }}">{{ project.project_name }}</a></h5>
+  <img src="{{ projpic }}{{ project.small_image }}" alt="{{ projpic }}{{ project.small_image }}"><h5><a href="/project/{{ project.project_no }}">{{ project.project_name }}</a></h5>
 <figcaption>Startdatum: {{ project.start_date }} Slutdatum: {{ project.end_date }} Bild: {{ project.small_image }}</figcaption> 
   </figure>
   {% endfor %}

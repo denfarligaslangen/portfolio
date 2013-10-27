@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+#This is the module that handles the json-based database of SimThebl Portfolio. Provides all the functions needed to use and maintain the database.
+#Authors: simgu002 and thebl297 2013
 
 import json
 import random

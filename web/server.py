@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+#This is the server program of SimThebl Portfolio. It sets up the server environment, all the pages and then runs the app.
+#Authors: simgu002 and thebl297 2013
 
 import flask
 import jinja2
@@ -7,9 +9,9 @@ import os
 import data
 import logging
 
-env = jinja2.Environment(loader=jinja2.FileSystemLoader( searchpath=os.getcwd()+"/templates" ))
+env = jinja2.Environment(loader=jinja2.FileSystemLoader( searchpath=os.getcwd()+"/templates" )) #Tells jinja where to find templates and how to load them.
 
-app = flask.Flask(__name__, static_folder='style')
+app = flask.Flask(__name__) #Creates an instance of the flask class and names it.
 
 app.debug = True
 
@@ -17,6 +19,7 @@ logging.basicConfig(filename='log.txt', level=logging.INFO)
 
 @app.route('/')
 def root():
+    """The "home" page. Loads a database and displays a random project"""
     status = 0
     db = data.load("data.json")
     if db == None: 
@@ -27,7 +30,7 @@ def root():
     template_file = "root.jinja"
     template = env.get_template( template_file )
     if status == 0:
-        templateVars = { "status": status, "project" : str(project_name), "pid": projectID, "thumb" : small_image, "short_desc" : short, "style": flask.url_for('static',filename='style.css'), "pic": flask.url_for('static', filename="") }
+        templateVars = { "status": status, "project" : str(project_name), "pid": projectID, "thumb" : small_image, "short_desc" : short, "style": flask.url_for('static',filename='style/style.css'), "pic": flask.url_for('static', filename="style/"), "projpic": flask.url_for('static', filename="images/") }
     elif status == 1:
         templateVars = { "status": status, "style": flask.url_for('static', filename="style.css") }
     
@@ -35,6 +38,7 @@ def root():
 
 @app.route('/list', methods=['GET', 'POST'])
 def mylist():
+    """The "search" page. Displays all search option and all projects matching a search"""
     status = 0
     db = data.load("data.json")
     if db == None:
@@ -91,7 +95,7 @@ def mylist():
     template_file = "list.jinja"
     template = env.get_template( template_file )
     if status == 0:
-        templateVars = { "status": status, "result" : result, "db" : db, "search_text" : search_text, "techs": tech_list, "checked_fields": field_list, "checked_techs": checked_tech_list, "style": flask.url_for('static',filename='style.css'), "pic": flask.url_for('static', filename="") }
+        templateVars = { "status": status, "result" : result, "db" : db, "search_text" : search_text, "techs": tech_list, "checked_fields": field_list, "checked_techs": checked_tech_list, "style": flask.url_for('static',filename='style/style.css'), "projpic": flask.url_for('static', filename="images/") }
         logging.info('Searched for: '+search_text)
     elif status == 1:
         templateVars = { "status": status, "style" : flask.url_for('static',filename='style.css') }
@@ -100,6 +104,7 @@ def mylist():
 
 @app.route('/techniques')
 def techniques():
+    """The "technique" page. Displays all techniques in a database and all projects related to them"""
     status = 0
     db = data.load("data.json")
     if db == None:
@@ -110,7 +115,7 @@ def techniques():
     template_file = "techniques.jinja"
     template = env.get_template( template_file )
     if status == 0:
-        templateVars = { "status": status, "techs" : techs, "stats" : data.get_technique_stats(db), "style": flask.url_for('static',filename='style.css') }
+        templateVars = { "status": status, "techs" : techs, "stats" : data.get_technique_stats(db), "style": flask.url_for('static',filename='style/style.css') }
     else:
         templateVars = { "status": status }
 
@@ -118,6 +123,7 @@ def techniques():
 
 @app.route('/project/<projectID>')
 def project(projectID):
+    """The "project" page. Displays a single project from a database by a given ID"""
     status = 0
     db = data.load('data.json')
     if db == None:
@@ -134,7 +140,7 @@ def project(projectID):
     template_file = "project.jinja"
     template = env.get_template( template_file )
     if status == 0:
-        templateVars = { "status": status, "project": p, "style": flask.url_for('static',filename='style.css') }
+        templateVars = { "status": status, "project": p, "style": flask.url_for('static',filename='style/style.css') }
     else:
         templateVars = { "status": status }
 
@@ -142,6 +148,7 @@ def project(projectID):
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
+    """The "admin" page. Displays a database to the admin with options to modify, add and remove projects"""
     db = data.load("data.json")
     is_logged_in = False
     user = ""
@@ -165,6 +172,7 @@ def admin():
 
 @app.route('/admin/addit', methods=['GET', 'POST'])
 def addit():
+    """The "modify/add" page. Lets the admin modify an existing project, or add a new one"""
     db = data.load("data.json")
     projectdb = data.load('empty_project.json')
     project = projectdb[0]
@@ -210,6 +218,7 @@ def addit():
 
 @app.errorhandler(404)
 def error_page(error):
+    """Displays an error message when error code 404 is encountered"""
     return "<h2>Quoth the server: 404 >:)</h2>"
 
 if __name__ == '__main__':
